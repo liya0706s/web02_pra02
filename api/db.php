@@ -168,6 +168,19 @@ class DB{
             // 將sql句子帶進pdo的query方法中，並以fetch的方式回傳一筆資料結果
             return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
         }
+
+        // $table->del($id) 刪除資料
+        function del($id){
+            // 建立一個基礎語法字串
+            $sql="delete from $this->table ";
+            
+            if(is_array($id)){
+                $tmp=$this->a2s($id);
+                $sql .= " where " .join(" && ",$tmp);
+            }else if (is_numeric($id)){
+                $sql .= " where `id`='$id'";
+            }
+        }
       }
 
 ?>
