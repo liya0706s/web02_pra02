@@ -195,7 +195,7 @@ class DB
         return $this->pdo->exec($sql);
     }
 
-    
+
     // $table->save($save) 新增/更新資料
     /**
      * $arg 必須是個陣列，但考慮速度，所以程式中沒有特別檢查是否為陣列
@@ -216,21 +216,38 @@ class DB
             }
 
             // 將轉換後的字串用逗號拼接到SQL語句中
-            $sql .= join(",",$tmp);
+            $sql .= join(",", $tmp);
             // 在SQL語句的末尾添加一個where條件，指定要更新紀錄的id
             $sql .= " where `id`='{$array['id']}'";
-        }else{
+        } else {
             // 如果$array沒有'id'鍵，建立一個插入「新」紀錄的SQL語句
-            $sql="insert into `$this->table` ";
+            $sql = "insert into `$this->table` ";
             // 將陣列的鍵名轉換為SQL語句的key鍵名稱部分
-            $cols="(`".join("`,`", array_keys($array))."`)";
+            $cols = "(`" . join("`,`", array_keys($array)) . "`)";
             // 將陣列的值轉換為SQL語句值的部分
-            $vals="('".join("','",$array)."')";
+            $vals = "('" . join("','", $array) . "')";
 
             // 將key和value拼接到SQL語句中
-            $sql=$sql.$cols." values ".$vals;
+            $sql = $sql . $cols . " values " . $vals;
         }
         // 執行 SQL 語句並回傳結果
         return $this->pdo->exec($sql);
     }
+
+    // q($sql) 複雜SQL語法的簡化函式
+    // 用來解決聯表查詢或是子查詢之類較為複雜的語法
+    public function q($sql)
+    {
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
+// 此兩個函式會獨立在DB類別之外
+function to($url){
+    header("location:" .$url);
+}
+function dd($array){
+    echo "<pre>";
+    print_r($array);
+    echo "</pre>";
 }
