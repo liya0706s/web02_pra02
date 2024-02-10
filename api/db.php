@@ -49,13 +49,18 @@ class DB
             if ($key != 'id') {
 
                 // 將$key和$value組成SQL語法的字串後，加入到一個暫存的陣列中
+<<<<<<< HEAD
                 $tmp[] = "`$key`='$value'";
+=======
+                $tmp[] = "`$key` = '$value'";
+>>>>>>> 0fde3b3ce16ce654d48956ff811cac6ffde0cfba
             }
         }
         // 回傳暫存的陣列
         return $tmp;
     }
 
+<<<<<<< HEAD
     // tmp[]="`$key`='$value'";
     // a2s() 語法會變成以下:
     // `firstname`='John'
@@ -75,6 +80,22 @@ class DB
         // 如果有設定資料表且不為空
         if (isset($this->table) && !empty($this->table)) {
 
+=======
+    // sql_all() 用來組合有特定條件，並且為多筆結果的sql語句
+    /**
+     * 此方法僅供類別內部使用，外部無法呼叫
+     * $sql 一個sql的字串，主要是where前的語法
+     * $array sql語句需要的欄位和值
+     * $other sql特殊語句
+     */
+
+    private function sql_all($sql, $array, $other)
+    {
+
+        // 如果有設定資料表且不為空
+        if (isset($this->table) && !empty($this->table)) {
+
+>>>>>>> 0fde3b3ce16ce654d48956ff811cac6ffde0cfba
             // 如果參數為陣列
             if (is_array($array)) {
 
@@ -189,6 +210,7 @@ class DB
     {
         // 建立一個基礎語法字串
         $sql = "delete from $this->table ";
+<<<<<<< HEAD
         // 如果id是陣列
         if (is_array($id)) {
             // 陣列轉換成語法
@@ -286,3 +308,72 @@ $News=new DB('news');
 $Total=new DB('total');
 $Que=new DB('que');
 
+=======
+
+        if (is_array($id)) {
+            $tmp = $this->a2s($id);
+            $sql .= " where " . join(" && ", $tmp);
+        } else if (is_numeric($id)) {
+            $sql .= " where `id`='$id'";
+        }
+        // 將sql句子帶進pdo的exec方法中，回傳的結果是影響了幾筆資料
+        return $this->pdo->exec($sql);
+    }
+
+
+    // $table->save($save) 新增/更新資料
+    /**
+     * $arg 必須是個陣列，但考慮速度，所以程式中沒有特別檢查是否為陣列
+     * 依據 $arg 是否帶有'id'這個key名，來決定是更新(有id)還是新增
+     */
+
+    function save($array)
+    {
+        // 如果 $array 中有 'id' 鍵--更新update
+        if (isset($array['id'])) {
+            // 如果有'id'，建立更新資料的 SQL 語句
+            $sql = "update `$this->table` set ";
+
+            // 如果 $array 不為空
+            if (!empty($array)) {
+                // 調用a2s()方法，將陣列轉換為SQL語法的字串
+                $tmp = $this->a2s($array);
+            }
+
+            // 將轉換後的字串用逗號拼接到SQL語句中
+            $sql .= join(",", $tmp);
+            // 在SQL語句的末尾添加一個where條件，指定要更新紀錄的id
+            $sql .= " where `id`='{$array['id']}'";
+        } else {
+            // 如果$array沒有'id'鍵，建立一個插入「新」紀錄的SQL語句
+            $sql = "insert into `$this->table` ";
+            // 將陣列的鍵名轉換為SQL語句的key鍵名稱部分
+            $cols = "(`" . join("`,`", array_keys($array)) . "`)";
+            // 將陣列的值轉換為SQL語句值的部分
+            $vals = "('" . join("','", $array) . "')";
+
+            // 將key和value拼接到SQL語句中
+            $sql = $sql . $cols . " values " . $vals;
+        }
+        // 執行 SQL 語句並回傳結果
+        return $this->pdo->exec($sql);
+    }
+
+    // q($sql) 複雜SQL語法的簡化函式
+    // 用來解決聯表查詢或是子查詢之類較為複雜的語法
+    public function q($sql)
+    {
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
+// 此兩個函式會獨立在DB類別之外
+function to($url){
+    header("location:" .$url);
+}
+function dd($array){
+    echo "<pre>";
+    print_r($array);
+    echo "</pre>";
+}
+>>>>>>> 0fde3b3ce16ce654d48956ff811cac6ffde0cfba
