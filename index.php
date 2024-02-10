@@ -18,9 +18,16 @@
 	</div>
 	<div id="all">
 		<div id="title">
-			00 月 00 號 Tuesday | 今日瀏覽: 1 | 累積瀏覽: 36 </div>
+			<!-- 用php顯示幕前日期 -->
+			<? date("m 月 d 號 l"); ?> | 
+			今日瀏覽: <? $Total->find(['date'=>date("Y-m-d")]) ;?>
+			累積瀏覽: 
+			<!-- 回首頁的連結在目前日期的右邊 -->
+			<a href="./index.php" style="float:right">回首頁</a>
+		</div>
+<!-- title2的地方設定標題圖片 -->
 		<div id="title2">
-
+<a href="./index.php"><img src="./icon/02B01.jpg" alt="健康促進網－回首頁"></a>
 		</div>
 		<div id="mm">
 			<div class="hal" id="lef">
