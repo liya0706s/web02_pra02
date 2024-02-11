@@ -19,9 +19,10 @@
 	<div id="all">
 		<div id="title">
 			<!-- 用php顯示幕前日期 -->
-			<? date("m 月 d 號 l"); ?> | 
-			今日瀏覽: <? $Total->find(['date'=>date("Y-m-d")]) ;?>
-			累積瀏覽: 
+			<?= date("m月d日 l"); ?> | 
+			<!-- 在total資料表中date欄位是目前的日期，中的total的欄位，存儲當日的瀏覽量 -->
+			今日瀏覽: <?= $Total->find(['date'=>date("Y-m-d")])['total'] ;?>
+			累積瀏覽: <?= $Total->sum('total') ;?>
 			<!-- 回首頁的連結在目前日期的右邊 -->
 			<a href="./index.php" style="float:right">回首頁</a>
 		</div>

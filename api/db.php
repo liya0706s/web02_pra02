@@ -15,7 +15,7 @@ class DB
      * $pdo PDO的物件變數
      */
 
-    protected $dsn = 'mysql:host=localhost;charset=utf8;dbname=web03';
+    protected $dsn = "mysql:host=localhost;charset=utf8;dbname=web03";
     protected $table;
     protected $pdo;
 
