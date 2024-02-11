@@ -44,26 +44,27 @@
 					<span style="width:20%; display:inline-block;">
 						<a href="?do=login">會員登入</a>
 					</span>
-					<div class="">
-						<?php
-						// 取得網址參數
-						$do = $_GET['do'] ?? 'main';
+				</div>
 
-						// 建立頁面檔案所在路徑
-						$file = "./front/{$do}.php";
+				<div class="">
+					<?php
+					// 取得網址參數
+					$do = $_GET['do'] ?? 'main';
 
-						// 判斷檔案及變數
-						if (file_exists($file)) {
+					// 建立頁面檔案所在路徑
+					$file = "./front/{$do}.php";
 
-							// 載入對應的頁面檔案
-							include $file;
-						} else {
-							// 如果沒有對應的頁面檔案，則直接載入main.php 
-							include "./front/main.php";
-						}
+					// 判斷檔案及變數
+					if (file_exists($file)) {
 
-						?>
-					</div>
+						// 載入對應的頁面檔案
+						include $file;
+					} else {
+						// 如果沒有對應的頁面檔案，則直接載入main.php 
+						include "./front/main.php";
+					}
+
+					?>
 				</div>
 			</div>
 		</div>
