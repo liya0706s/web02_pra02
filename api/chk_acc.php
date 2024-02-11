@@ -1,5 +1,5 @@
 <?php
-include_once "../api/db.php";
+include_once "./api/db.php";
 
 // 利用count來檢查是否帳號存在
 // User資料表的acc數量是 POST的 acc
