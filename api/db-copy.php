@@ -179,7 +179,8 @@ class DB
         if (isset($array['id'])) {
             // 建立更新資料的 SQL 語句，則準備一個更新 (update) 的 SQL 語句，
             // 用於更新資料庫中的現有記錄
-            $sql = "update `$this->table` set "; // $this->table 是一個變數，儲存了當前要操作的資料表名稱
+            $sql = "update `$this->table` set "; 
+            // $this->table 是一個變數，儲存了當前要操作的資料表名稱
 
             // 如果 $array 不為空
             if (!empty($array)) {
@@ -198,7 +199,8 @@ class DB
         } else {
             // 如果 $array 中不存在 'id' 鍵，
             // 則認為是一個新的記錄，準備一個插入 (insert) 的 SQL 語句
-            $sql = "insert into `$this->table`"; // 插入到 $this->table 指定的資料表中
+            $sql = "insert into `$this->table`"; 
+            // 插入到 $this->table 指定的資料表中
             // 使用 array_keys 函數獲取 $array 陣列中所有鍵名，
             // 這個字串代表 SQL 語句中的列名稱
             $cols = "(`" . join("`,`", array_keys($array)) . "`)";

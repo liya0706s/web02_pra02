@@ -24,7 +24,7 @@ class DB
      * 建構式為物件被實例化(new DB)時會先執行的方法
      */
 
-    function __construct($table)
+    public function __construct($table)
     {
         // 將物件內部的$table值設為帶入的$table 
         $this->table = $table;
@@ -97,7 +97,7 @@ class DB
     // math() 內部函式，用來做為聚合函式的sql語法轉換
     protected function math($math, $col, $array = '', $other = '')
     {
-        $sql = "select $math($col) from $this->table ";
+        $sql = "select $math($col) from $this->table";
         $sql = $this->sql_all($sql, $array, $other);
 
         // 因為這類方法大多是只會回傳一個值，所以使用fetchColumn()的方法來回傳
@@ -137,7 +137,7 @@ class DB
     function count($where = '', $other = '')
     {
         // 建立查詢資料筆數的SQL語句
-        $sql = "select count(*) from `$this->table` ";
+        $sql = "select count(*) from `$this->table`";
         // 拼接 WHERE 條件和其他條件
         $sql = $this->sql_all($sql, $where, $other);
         // 執行 SQL語句並回傳結果
@@ -166,7 +166,7 @@ class DB
     function find($id)
     {
         // 建立一個基礎語法字串
-        $sql = "select * from $this->table ";
+        $sql = "select * from $this->table";
 
         // 如果 $id 是陣列
         if (is_array($id)) {
@@ -188,7 +188,7 @@ class DB
     function del($id)
     {
         // 建立一個基礎語法字串
-        $sql = "delete from $this->table ";
+        $sql = "delete from $this->table";
         // 如果id是陣列
         if (is_array($id)) {
             // 陣列轉換成語法
@@ -225,7 +225,7 @@ class DB
             $sql .= " where `id`='{$array['id']}'";
         } else {
             // 建立"新增"資料的SQL語句
-            $sql = "insert into `$this->table` ";
+            $sql = "insert into `$this->table`";
             $cols = "(`" . join("`,`", array_keys($array)) . "`)";
             $vals = "('" . join("','", $array) . "')";
 
@@ -280,29 +280,29 @@ function dd($array)
     echo "</pre>";
 }
 
-$User=new DB('user');
-$Log=new DB('log');
-$News=new DB('news');
-$Total=new DB('total');
-$Que=new DB('que');
+$User = new DB('user');
+$Log = new DB('log');
+$News = new DB('news');
+$Total = new DB('total');
+$Que = new DB('que');
 
 
 // 判斷訪客的拜訪狀態，用來決定當日訪客人次是否需要增加
 
 // 如果尚未設定 $_SESSION['visited'], 則執行以下程式碼
-if(!isset($_SESSION['visited'])){
+if (!isset($_SESSION['visited'])) {
     // 如果今天的日期在資料庫中已存在，則取得該資料
-    if($Total->count(['date'=>date('Y-m-d')])>0){
+    if ($Total->count(['date' => date('Y-m-d')]) > 0) {
         // 找到日期欄位是當日日期
-        $total=$Total->find(['date'=>date('Y-m-d')]);
+        $total = $Total->find(['date' => date('Y-m-d')]);
         // 將該筆資料的 total 欄位加一
         $total['total']++;
         // 儲存更新後的資料
         $Total->save($total);
-    }else{
+    } else {
         // 如果今天的日期在資料庫中不存在，則新增一筆資料
-        $Total->save(['total'=>1,'date'=>date('Y-m-d')]);
+        $Total->save(['total' => 1, 'date' => date('Y-m-d')]);
     }
     // 設定 $_SESSION['visited'] 為 1, 表示已經訪問過
-    $_SESSION['visited']=1;
+    $_SESSION['visited'] = 1;
 }

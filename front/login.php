@@ -21,7 +21,7 @@
         </tr>
     </table>
 </fieldset>
-<!-- <a href="../api/chk_acc.php"></a> -->
+<!-- <a href="../back.php"></a> -->
 <script>
     function login() {
         // 取得帳號輸入框的值
@@ -43,10 +43,10 @@
                     if (parseInt(res) == 1) {
                         // 如果帳號為 'admin', 導向後台頁面
                         if ($("#acc").val() == 'admin') {
-                            location.href = "back.php";
+                            location.href = "../back.php";
                         } else {
                             // 否則導向首頁
-                            location.href = "index.php";
+                            location.href = "../index.php";
                         }
                     } else {
                         alert("密碼錯誤")

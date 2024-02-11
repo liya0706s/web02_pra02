@@ -1,4 +1,5 @@
 ﻿<?php include_once "./api/db.php" ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0039) -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +9,7 @@
 
 	<title>健康促進網</title>
 	<link href="./css/css.css" rel="stylesheet" type="text/css">
-	<script src="./js/jquery-1.9.1.min.js"></script>
-	<script src="./js/js.js"></script>
+	
 </head>
 
 <body>
@@ -76,5 +76,6 @@
 	</div>
 
 </body>
-
+<script src="./js/jquery-1.9.1.min.js"></script>
+	<script src="./js/js.js"></script>
 </html>
