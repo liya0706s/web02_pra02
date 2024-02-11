@@ -30,7 +30,7 @@
         let pw = $('#pw').val()
         // 發送 POST 請求到 chk_acc.php 檢查帳號是否存在
         // 請求的資料是一個物件，其中只包含了一個變數acc, 當請求完成後會執行回調函數, 接收一個參數res
-        $.post('./api/chk_acc.php', {
+        $.post('../api/chk_acc.php', {
             acc
         }, (res) => {
             // 如果回傳的結果為整數 0, 表示查無帳號
@@ -38,7 +38,7 @@
                 alert("查無帳號")
             } else {
                 // 發送 POST 請求到 chk_pw.php 檢查帳號密碼是否正確
-                $.post('./api/chk_pw.php', {acc,pw}, (res) => {
+                $.post('../api/chk_pw.php', {acc,pw}, (res) => {
                     // 如果回傳的結果為 1, 表示密碼正確
                     if (parseInt(res) == 1) {
                         // 如果帳號為 'admin', 導向後台頁面
